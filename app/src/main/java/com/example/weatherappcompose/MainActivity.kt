@@ -19,6 +19,7 @@ import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import com.example.weatherappcompose.data.WeatherModel
+import com.example.weatherappcompose.screens.AlertDialogCitySearch
 import com.example.weatherappcompose.screens.MainCard
 import com.example.weatherappcompose.screens.TabLayout
 import com.example.weatherappcompose.ui.theme.WeatherAppComposeTheme
@@ -34,6 +35,7 @@ class MainActivity : ComponentActivity() {
                 val daysList = remember {
                     mutableStateOf(listOf<WeatherModel>())
                 }
+
                 val currentDay = remember {
                     mutableStateOf(
                         WeatherModel(
@@ -49,6 +51,25 @@ class MainActivity : ComponentActivity() {
                     )
                 }
 
+                val alertDialogState = remember {
+                    mutableStateOf(false)
+                }
+
+                when {
+                    alertDialogState.value -> {
+                        AlertDialogCitySearch(
+                            onDismissRequest = { alertDialogState.value = false },
+                            onConfirmRequest = { userInputtedString ->
+                                alertDialogState.value = false
+                                getData(userInputtedString, this, daysList, currentDay)
+
+                            },
+                            alertDialogTitle = "Enter the name of city:",
+                            alertDialogIcon = R.drawable.ic_city
+                        )
+                    }
+                }
+
                 getData("Warsaw", this, daysList, currentDay)
 
                 Image(
@@ -62,7 +83,11 @@ class MainActivity : ComponentActivity() {
                     contentScale = ContentScale.FillBounds
                 )
                 Column {
-                    MainCard(currentDay)
+                    MainCard(currentDay, onClickSync = {
+                        getData("Warsaw", this@MainActivity, daysList, currentDay)
+                    }, alertDialogCitySearch = {
+                        alertDialogState.value = true
+                    })
                     TabLayout(daysList, currentDay)
                 }
 

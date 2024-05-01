@@ -50,7 +50,7 @@ import org.json.JSONObject
 
 
 @Composable
-fun MainCard(currentDay: MutableState<WeatherModel>) {
+fun MainCard(currentDay: MutableState<WeatherModel>, onClickSync: () -> Unit, alertDialogCitySearch : () -> Unit) {
     Column(
         modifier = Modifier
             .padding(5.dp),
@@ -123,7 +123,7 @@ fun MainCard(currentDay: MutableState<WeatherModel>) {
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
                     IconButton(onClick = {
-                        /*TODO*/
+                        alertDialogCitySearch.invoke()
                     }
                     ) {
                         Icon(
@@ -146,7 +146,7 @@ fun MainCard(currentDay: MutableState<WeatherModel>) {
                         )
                     )
                     IconButton(onClick = {
-                        /*TODO*/
+                        onClickSync.invoke()
                     }
                     ) {
                         Icon(
