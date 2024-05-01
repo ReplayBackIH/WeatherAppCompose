@@ -54,9 +54,12 @@ dependencies {
     //lib for async images
     implementation("io.coil-kt:coil-compose:2.6.0")
 
-    //Pager
+    //Pager compose
     implementation("com.google.accompanist:accompanist-pager:0.19.0")
     implementation("com.google.accompanist:accompanist-pager-indicators:0.19.0")
+
+    //Volley for Api calls
+    implementation("com.android.volley:volley:1.2.1")
 
     implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
